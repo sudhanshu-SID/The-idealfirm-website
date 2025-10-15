@@ -1,0 +1,104 @@
+Build a modern, fast, mobile-first website for “The Idea Firm — Digital Marketing Agency in Guwahati,” inspired by Brandingoo’s clean layout, big typographic sections, bold stats, and section-based storytelling; match the overall feel: dark background, high contrast, spacious grids, smooth scroll, and tasteful reveals.
+
+Tech constraints: Frontend must be semantic HTML5 + modern CSS3 only (no React/UI frameworks) with vanilla JS solely for animations; Backend must be Node.js (v18+) with Express for form endpoints and email delivery via Nodemailer; deploy frontend and backend separately if needed.
+
+Animations: Use GSAP + ScrollTrigger for section reveals, counters, and pinned hero elements; use Lenis for buttery smooth, GPU-accelerated scrolling synced with ScrollTrigger’s ticker for stable scroll-linked effects.
+
+Content pillars (copy placeholders allowed):
+
+Tagline: “Digital Marketing Agency in Guwahati — For all your digital marketing solutions” as the primary hero headline with strong CTA buttons (“Get Proposal” and “Book a Free Audit”).
+
+Services section (grid, 2–3 columns desktop, 1–2 mobile): Digital Marketing Services; Google Ads Service in Guwahati; Facebook Ads Service in Guwahati; Web Designing Service in Guwahati; SEO Service in Guwahati; Social Media Marketing in Guwahati; Content Marketing Service in Guwahati.
+
+Industries/clients worked for (icon grid taken from provided image): Educational Institutions, Real Estate, Exclusive Showrooms, Automobiles, Manufacturers, Hospitality; show each with circular icon cards and short captions.
+
+Proof section: animated KPI counters (e.g., “Leads generated,” “Average ROI uplift,” “Campaigns delivered”), triggered on scroll and counting up once per view using GSAP.
+
+Case studies/featured projects carousel or grid with image, problem → approach → outcomes (metrics-first), plus client logos row.
+
+Testimonials slider (3–6 quotes) with client name and role, swipeable on mobile.
+
+Contact/CTA band repeated every 2–3 sections with anchor to the contact form.
+
+Information architecture and pages:
+
+Home (sectioned single-page flow) with anchor links for Services, Industries, Work, Testimonials, Blog, and Contact.
+
+Individual service landing pages for local SEO: /services/google-ads-guwahati, /services/facebook-ads-guwahati, /services/web-designing-guwahati, /services/seo-guwahati, /services/social-media-marketing-guwahati, /services/content-marketing-guwahati; each page needs benefit-led copy, FAQs, process steps, and a form.
+
+Blog index (/blog) + blog post template for thought leadership and updates, even if initial posts are placeholders.
+
+Contact page with map embed (static) and full form, plus WhatsApp/phone shortcuts.
+
+Header and navigation: sticky, compact header with logo left, centered nav items (or right-aligned), and persistent primary CTA button; hamburger menu for mobile with slide-in panel.
+
+Hero section: full-bleed, high-contrast hero with large H1 and supporting subhead; include two CTAs (primary solid, secondary outline) and an optional subtle background motion using GSAP for parallax/pin on large screens only.
+
+Services section layout: stacked headings with service cards; each card shows an icon, short benefit list, and deep-link to corresponding service page; hover raises and adds soft shadow; reveal staggered on scroll.
+
+Industries/clients section: use circular icon tiles from provided categories; present as a horizontally scrollable row on mobile and 3×2 grid on desktop; gentle fade/scale-in on intersection.
+
+Case studies/work: grid of 3–6 items; each tile flips to show outcomes KPIs on hover; details page includes challenge, strategy, deliverables, outcomes with figures and screenshots.
+
+Testimonials: simple card slider with auto-play and manual arrows; pause on hover; lazy-load avatars; ARIA roles for carousel controls.
+
+Footer: NAP details (business name, Guwahati, Assam, India), quick links, services list, social links, and copyright; include a short secondary CTA and email capture form.
+
+Visual system:
+
+Color: dark background (#0E0E10 or similar), light text (#F3F4F6), accent (electric purple or teal) used sparingly for buttons and highlights; define CSS variables for colors and spacing.
+
+Typography: modern grotesk/sans (e.g., Inter/Poppins) with large H1 (clamp), comfortable line-height, and clear hierarchy; use letter-spacing for section kicker labels.
+
+Layout: CSS Grid/Flexbox; 12-column max container at ~1200–1280px, with generous section paddings; ensure comfortable touch targets on mobile.
+
+Micro-interactions: link underline animations, button press depth, card hover scale 1.02 with 200–250ms transitions.
+
+Animations implementation:
+
+Initialize Lenis and sync with GSAP’s ScrollTrigger; limit heavy effects to desktop breakpoints; prefer fade/translateY 16–24px and staggered reveals; pin hero headline on large screens; animate counters when in view.
+
+Respect prefers-reduced-motion: disable non-essential animations when users opt out.
+
+Forms and backend (Node.js/Express):
+
+Endpoints: POST /api/contact and POST /api/quote; accept name, email, phone, company, service interest, message, source; validate/sanitize on server.
+
+Email: send structured HTML email to agency inbox via Nodemailer (SMTP or API), with success/failure JSON responses; use environment variables for credentials.
+
+Persistence: optionally store leads in MongoDB with createdAt timestamps and basic status field; return lead ID on success.
+
+Security: rate-limit form posts, apply Helmet, validate inputs strictly, and include basic bot protection (honeypot + time-based challenge; optional reCAPTCHA).
+
+Accessibility: semantic landmarks, alt text, color contrast ≥ WCAG AA, focus styles, ARIA labels on sliders and nav, and skip-to-content link; ensure keyboard operability for menus and carousels.
+
+SEO and local SEO:
+
+Semantic HTML with one H1 per page, descriptive meta titles/descriptions, Open Graph/Twitter tags, XML sitemap, and robots.txt.
+
+JSON-LD LocalBusiness markup with “Guwahati, Assam, India” address and serviceArea; add FAQPage schema to service pages and Article schema to blog posts.
+
+Internal linking from Home → service pages and related blog posts; optimize slugs for “service-in-guwahati” patterns.
+
+Performance: ship critical CSS inline for above-the-fold, defer non-critical JS, lazy-load images with responsive srcset/WebP, compress assets, and target sub-3s LCP on 4G; avoid layout shift by reserving media dimensions.
+
+Deliverables:
+
+Frontend file structure: /public (index.html, services/.html, blog/.html, images/, css/styles.css, js/main.js, js/animations.js).
+
+Backend file structure: /server (server.js, routes/forms.js, controllers/forms.js, utils/mailer.js), .env.example, package.json with scripts dev/start; include README with setup and deploy steps.
+
+Deployment targets: host static frontend on Netlify/Vercel; host Node/Express backend on Render/Railway/DigitalOcean; configure CORS for frontend domain; set environment variables for SMTP/API keys securely.
+
+QA checklist: test scroll/animation smoothness, form validation and email delivery, rate-limiting, responsiveness across breakpoints, lighthouse scores (Performance ≥ 90, Accessibility ≥ 90), and SEO metadata for each service page.
+
+Visual references and assets: align overall feel to Brandingoo’s section rhythm, stat emphasis, and service-first messaging; use the attached Services and Industries images as style references for iconography and grouping during design.
+
+Notes on libraries and setup
+Use the official GSAP ScrollTrigger patterns for pinning, scrub, and view-based triggers to keep animations performant and easy to maintain.
+
+Initialize Lenis and sync it with GSAP’s ticker exactly as documented to avoid jank and keep scroll-based effects in lockstep.
+
+Follow MDN’s Express form-handling flow for GET/POST, validation, and error reporting; return JSON and show inline error states on the client.
+
+Use Nodemailer with SMTP/API and environment variables, testing with a sandbox provider first before switching to production credentials.
