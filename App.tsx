@@ -6,6 +6,7 @@ import Services from './components/Services';
 import Industries from './components/Industries';
 import Impact from './components/Impact';
 import SuccessStories from './components/SuccessStories';
+// import Testimonials from './components/Testimonials';
 import CTA from './components/CTA';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -18,9 +19,11 @@ const App: React.FC = () => {
         <Hero />
         <About />
         <Services />
+        <CTA variant="mini" />
         <Industries />
         <Impact />
         <SuccessStories />
+        {/* <Testimonials /> */}
         <CTA />
         <Contact />
       </main>
