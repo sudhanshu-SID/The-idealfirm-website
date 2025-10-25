@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { GoogleAdsIcon, SEOIcon, WebDesignIcon, SocialMediaIcon } from './icons';
+import React, { useRef, useState } from 'react';
+import { GoogleAdsIcon, SEOIcon, WebDesignIcon, SocialMediaIcon, FacebookAdsIcon, ContentMarketingIcon } from './icons';
 
 const ArrowRightIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -7,186 +7,52 @@ const ArrowRightIcon: React.FC<{ className?: string }> = ({ className }) => (
     </svg>
 );
 
-const InteractiveBackground: React.FC = () => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-    const mouse = useRef<{ x: number | undefined, y: number | undefined }>({ x: undefined, y: undefined });
+const OrbitingServices: React.FC = () => {
+    const services = [
+        { icon: <GoogleAdsIcon className="w-8 h-8 text-brand-primary" />, name: 'Google Ads' },
+        { icon: <SEOIcon className="w-8 h-8 text-brand-primary" />, name: 'SEO' },
+        { icon: <WebDesignIcon className="w-8 h-8 text-brand-primary" />, name: 'Web Design' },
+        { icon: <SocialMediaIcon className="w-8 h-8 text-brand-primary" />, name: 'Social Media' },
+        { icon: <FacebookAdsIcon className="w-8 h-8 text-brand-primary" />, name: 'Facebook Ads' },
+        { icon: <ContentMarketingIcon className="w-8 h-8 text-brand-primary" />, name: 'Content' },
+    ];
+    
+    const iconWrapperClasses = "w-full h-full bg-brand-surface rounded-full shadow-lg border border-gray-200/80 flex items-center justify-center animate-spin-reverse-slow group-hover:[animation-play-state:paused] transition-transform duration-300 hover:!scale-125 cursor-pointer";
 
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
+    return (
+        <div className="relative flex items-center justify-center w-[300px] h-[300px] md:w-[450px] md:h-[450px] group">
+            {/* Central element */}
+            <div className="absolute w-28 h-28 md:w-40 md:h-40 bg-sky-500/5 rounded-full flex items-center justify-center shadow-inner border border-sky-500/10 transition-transform duration-500 group-hover:scale-110">
+                <div className="w-16 h-16 md:w-24 md:h-24 bg-sky-500/10 rounded-full shadow-lg"></div>
+            </div>
 
-        let particles: { x: number, y: number, vx: number, vy: number, radius: number }[] = [];
-        const particleCount = 80;
-        const connectDistance = 120;
-        const mouseConnectDistance = 200;
-
-        const resizeCanvas = () => {
-            const parentElement = canvas.parentElement;
-            if (!parentElement) return;
-            canvas.width = parentElement.offsetWidth;
-            canvas.height = parentElement.offsetHeight;
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.3,
-                    vy: (Math.random() - 0.5) * 0.3,
-                    radius: Math.random() * 1.5 + 1,
-                });
-            }
-        };
-
-        const handleMouseMove = (event: MouseEvent) => {
-            const rect = canvas.getBoundingClientRect();
-            mouse.current.x = event.clientX - rect.left;
-            mouse.current.y = event.clientY - rect.top;
-        };
-        
-        const handleMouseLeave = () => {
-            mouse.current.x = undefined;
-            mouse.current.y = undefined;
-        }
-
-        const parentElement = canvas.parentElement;
-        if (!parentElement) return;
-
-        parentElement.addEventListener('mousemove', handleMouseMove);
-        parentElement.addEventListener('mouseleave', handleMouseLeave);
-        window.addEventListener('resize', resizeCanvas);
-        
-        resizeCanvas();
-
-        let animationFrameId: number;
-        const animate = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            particles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-
-                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(14, 165, 233, 0.6)';
-                ctx.fill();
-            });
-
-            // Particle-to-particle connections
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i; j < particles.length; j++) {
-                    const dist = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
-                    if (dist < connectDistance) {
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = `rgba(14, 165, 233, ${1 - dist / connectDistance})`;
-                        ctx.lineWidth = 0.4;
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            // Particle-to-mouse connections
-            if (mouse.current.x !== undefined && mouse.current.y !== undefined) {
-                 particles.forEach(p => {
-                    const distToMouse = Math.hypot(p.x - mouse.current.x!, p.y - mouse.current.y!);
-                    if (distToMouse < mouseConnectDistance) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(mouse.current.x!, mouse.current.y!);
-                        ctx.strokeStyle = `rgba(14, 165, 233, ${0.5 * (1 - distToMouse / mouseConnectDistance)})`;
-                        ctx.lineWidth = 0.6;
-                        ctx.stroke();
-                    }
-                 });
-            }
-            
-            animationFrameId = requestAnimationFrame(animate);
-        };
-
-        animate();
-
-        return () => {
-            cancelAnimationFrame(animationFrameId);
-            window.removeEventListener('resize', resizeCanvas);
-            if (parentElement) {
-                parentElement.removeEventListener('mousemove', handleMouseMove);
-                parentElement.removeEventListener('mouseleave', handleMouseLeave);
-            }
-        };
-    }, []);
-
-    return <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full z-0" />;
-};
-
-const ServicesShowcase: React.FC = () => {
-  const showcaseRef = useRef<HTMLDivElement>(null);
-  const [style, setStyle] = useState<React.CSSProperties>({});
-
-  const services = [
-    { name: "Google Ads", icon: <GoogleAdsIcon /> },
-    { name: "SEO Service", icon: <SEOIcon /> },
-    { name: "Web Design", icon: <WebDesignIcon /> },
-    { name: "Social Media", icon: <SocialMediaIcon /> },
-  ];
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!showcaseRef.current) return;
-    const { left, top, width, height } = showcaseRef.current.getBoundingClientRect();
-    const x = e.clientX - left - width / 2;
-    const y = e.clientY - top - height / 2;
-
-    const rotateX = (-y / (height / 2)) * 12;
-    const rotateY = (x / (width / 2)) * 12;
-
-    setStyle({
-      transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
-      transition: 'transform 0.1s ease-out',
-    });
-  };
-
-  const handleMouseLeave = () => {
-    setStyle({
-      transform: 'rotateX(0) rotateY(0)',
-      transition: 'transform 0.6s ease-in-out',
-    });
-  };
-
-  const cardBaseClasses = "absolute bg-brand-surface rounded-xl shadow-xl p-4 flex flex-col justify-center items-center animate-float border border-gray-200/80 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-brand-primary cursor-pointer";
-
-  return (
-    <div
-      ref={showcaseRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="relative w-full h-96 hidden lg:flex items-center justify-center"
-      style={{ perspective: '1200px' }}
-    >
-      <div className="w-full h-full relative" style={{...style, transformStyle: 'preserve-3d'}}>
-        <div className={`${cardBaseClasses} w-52 h-32 top-8 left-1/4`} style={{ transform: 'translateZ(40px) rotateZ(-6deg)', animationDelay: '0s', backfaceVisibility: 'hidden' }}>
-          <div className="text-brand-primary">{services[0].icon}</div>
-          <p className="font-bold mt-2 text-brand-text-primary">{services[0].name}</p>
+            {/* Orbit container */}
+            <div className="w-full h-full relative animate-spin-slow group-hover:[animation-play-state:paused]">
+                {/* Mobile Icons */}
+                <div className="md:hidden">
+                    {services.map((service, index) => {
+                        const angle = (index / services.length) * 360;
+                        return (
+                            <div key={`${service.name}-mobile`} className="absolute top-1/2 left-1/2 w-16 h-16 -m-8" style={{ transform: `rotate(${angle}deg) translateX(120px) rotate(-${angle}deg)` }}>
+                                <div className={iconWrapperClasses + " p-3"}> {service.icon} </div>
+                            </div>
+                        );
+                    })}
+                </div>
+                {/* Desktop Icons */}
+                <div className="hidden md:block">
+                    {services.map((service, index) => {
+                        const angle = (index / services.length) * 360;
+                        return (
+                            <div key={`${service.name}-desktop`} className="absolute top-1/2 left-1/2 w-20 h-20 -m-10" style={{ transform: `rotate(${angle}deg) translateX(190px) rotate(-${angle}deg)` }}>
+                                <div className={iconWrapperClasses + " p-4"}> {service.icon} </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
         </div>
-        <div className={`${cardBaseClasses} w-60 h-36 top-1/2 -left-2`} style={{ transform: 'translateZ(80px) rotateZ(10deg)', animationDelay: '0.5s', backfaceVisibility: 'hidden' }}>
-          <div className="text-brand-primary">{services[1].icon}</div>
-          <p className="font-bold mt-2 text-brand-text-primary">{services[1].name}</p>
-        </div>
-        <div className={`${cardBaseClasses} w-56 h-36 bottom-8 left-1/2`} style={{ transform: 'translateZ(20px) rotateZ(-10deg)', animationDelay: '1s', backfaceVisibility: 'hidden' }}>
-          <div className="text-brand-primary">{services[2].icon}</div>
-          <p className="font-bold mt-2 text-brand-text-primary">{services[2].name}</p>
-        </div>
-        <div className={`${cardBaseClasses} w-52 h-32 top-1/4 right-4`} style={{ transform: 'translateZ(60px) rotateZ(8deg)', animationDelay: '0.2s', backfaceVisibility: 'hidden' }}>
-           <div className="text-brand-primary">{services[3].icon}</div>
-           <p className="font-bold mt-2 text-brand-text-primary">{services[3].name}</p>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 
@@ -220,9 +86,7 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center py-20 px-4 overflow-hidden bg-brand-surface">
-      <InteractiveBackground />
-      
+    <section className="relative min-h-screen flex items-center py-20 px-4 overflow-hidden bg-gradient-to-br from-sky-50 via-brand-surface to-sky-100">
       <div className="container mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10">
         <div 
           className="text-center lg:text-left"
@@ -256,7 +120,9 @@ const Hero: React.FC = () => {
             </a>
           </div>
         </div>
-        <ServicesShowcase />
+        <div className="flex items-center justify-center mt-8 lg:mt-0">
+          <OrbitingServices />
+        </div>
       </div>
     </section>
   );
