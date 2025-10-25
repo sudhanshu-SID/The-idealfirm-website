@@ -25,6 +25,53 @@
             fontFamily: {
               sans: ['Poppins', 'sans-serif'],
             },
+            animation: {
+              'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
+              'pulse-slow': 'pulse 2.5s infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'progress-fill': 'progress-fill 7s linear forwards',
+              'spin-slow': 'spin 25s linear infinite',
+              'spin-reverse-slow': 'spin-reverse 25s linear infinite',
+            },
+            keyframes: {
+              'fade-in-up': {
+                'from': { 
+                  opacity: '0',
+                  transform: 'translateY(20px)' 
+                },
+                'to': { 
+                  opacity: '1',
+                  transform: 'translateY(0)' 
+                },
+              },
+              'pulse': {
+                '0%, 100%': {
+                  transform: 'scale(1)',
+                  boxShadow: '0 0 0 0 rgba(14, 165, 233, 0.7)'
+                },
+                '50%': {
+                  transform: 'scale(1.05)',
+                  boxShadow: '0 0 0 12px rgba(14, 165, 233, 0)'
+                }
+              },
+              'float': {
+                '0%': { transform: 'translateY(0px) rotate(-1.5deg)' },
+                '50%': { transform: 'translateY(-18px) rotate(1.5deg)' },
+                '100%': { transform: 'translateY(0px) rotate(-1.5deg)' },
+              },
+              'progress-fill': {
+                'from': { width: '0%' },
+                'to': { width: '100%' },
+              },
+              'spin': {
+                'from': { transform: 'rotate(0deg)' },
+                'to': { transform: 'rotate(360deg)' },
+              },
+              'spin-reverse': {
+                'from': { transform: 'rotate(0deg)' },
+                'to': { transform: 'rotate(-360deg)' },
+              },
+            }
           }
         }
       }
@@ -48,7 +95,6 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
   <body class="bg-brand-bg text-brand-text-primary font-sans antialiased">
     <div id="root"></div>
