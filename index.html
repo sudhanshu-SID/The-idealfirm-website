@@ -41,6 +41,7 @@
               'pulse-slow': 'pulse 2.5s infinite',
               'float': 'float 6s ease-in-out infinite',
               'progress-fill': 'progress-fill 7s linear forwards',
+              'marquee': 'marquee 40s linear infinite',
             },
             keyframes: {
               'fade-in-up': {
@@ -71,6 +72,10 @@
               'progress-fill': {
                 'from': { width: '0%' },
                 'to': { width: '100%' },
+              },
+              'marquee': {
+                '0%': { transform: 'translateX(0%)' },
+                '100%': { transform: 'translateX(-50%)' },
               },
             }
           }
