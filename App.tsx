@@ -6,6 +6,7 @@ import Services from './components/Services';
 import Industries from './components/Industries';
 import Impact from './components/Impact';
 import SuccessStories from './components/SuccessStories';
+import ClientLogos from './components/ClientLogos';
 // import Testimonials from './components/Testimonials';
 import FAQ from './components/FAQ.tsx';
 import CTA from './components/CTA';
@@ -24,6 +25,7 @@ const App: React.FC = () => {
         <Industries />
         <Impact />
         <SuccessStories />
+        <ClientLogos />
         <FAQ />
         {/* <Testimonials /> */}
         <CTA />
