@@ -1,5 +1,5 @@
 import React from 'react';
-import { FacebookIcon, TwitterIcon, LinkedInIcon, InstagramIcon, WhatsappIcon } from './icons';
+import { LinkedInIcon, WhatsappIcon } from './icons';
 
 const Footer: React.FC = () => {
     
