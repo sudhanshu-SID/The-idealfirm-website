@@ -14,7 +14,7 @@ const clients: Client[] = [
     },
     { 
         id: 'ride-wheelz', 
-        src: 'ridewheelz.png', 
+        src: 'ridewheelz.jpg', 
         name: 'Ride Wheelz' 
     },
     { 
@@ -29,7 +29,7 @@ const clients: Client[] = [
     },
     { 
         id: 'rent-my-car', 
-        src: '/rent-my-car.png', 
+        src: 'rentmycar.png', 
         name: 'Rent My Car' 
     },
 ];
