@@ -24,7 +24,7 @@ const App: React.FC = () => {
         <CTA variant="mini" />
         <Industries />
         <Impact />
-        <SuccessStories />
+        {/* <SuccessStories /> */}
         <ClientLogos />
         <FAQ />
         {/* <Testimonials /> */}
