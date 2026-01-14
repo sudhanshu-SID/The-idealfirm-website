@@ -5,7 +5,7 @@ import About from './components/About';
 import Services from './components/Services';
 import Industries from './components/Industries';
 import Impact from './components/Impact';
-import SuccessStories from './components/SuccessStories';
+//import SuccessStories from './components/SuccessStories';
 import ClientLogos from './components/ClientLogos';
 // import Testimonials from './components/Testimonials';
 import FAQ from './components/FAQ.tsx';
