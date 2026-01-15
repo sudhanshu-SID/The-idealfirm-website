@@ -9,12 +9,12 @@ type Client = {
 const clients: Client[] = [
     { 
         id: 'country-wheels', 
-        src: 'countrywheels.png', 
+        src: '/countrywheels.png', 
         name: 'Country Wheels'
     },
     { 
         id: 'ride-wheelz', 
-        src: 'ridewheelz.jpg', 
+        src: '/ridewheelz.jpg', 
         name: 'Ride Wheelz' 
     },
     { 
@@ -24,12 +24,12 @@ const clients: Client[] = [
     },
     { 
         id: 'local-gadi', 
-        src: 'Local-Gadi.png', 
+        src: '/Local-Gadi.png', 
         name: 'Local Gadi' 
     },
     { 
         id: 'rent-my-car', 
-        src: 'rentmycar.png', 
+        src: '/rentmycar.png', 
         name: 'Rent My Car' 
     },
 ];
@@ -61,7 +61,7 @@ const ClientLogoItem: React.FC<{ client: Client }> = ({ client }) => {
 
 const ClientLogos: React.FC = () => {
   return (
-    <section className="py-20 bg-white border-y border-gray-100 overflow-hidden relative">
+      <section id="ClientLogos" className="py-20 bg-white border-y border-gray-100 overflow-hidden relative">
       <div className="container mx-auto px-4 text-center mb-12">
          <div className="inline-block bg-sky-50 border border-sky-100 rounded-full px-5 py-2 mb-6">
             <span className="text-sm font-bold text-brand-primary uppercase tracking-widest flex items-center gap-2">
