@@ -1,38 +1,49 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
-import Hero from './components/Hero';
-import About from './components/About';
-import Services from './components/Services';
-import Industries from './components/Industries';
-import Impact from './components/Impact';
-//import SuccessStories from './components/SuccessStories';
-import ClientLogos from './components/ClientLogos';
-// import Testimonials from './components/Testimonials';
-import FAQ from './components/FAQ.tsx';
-import CTA from './components/CTA';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Home from './pages/Home';
+import BlogList from './pages/BlogList';
+import BlogPost from './pages/BlogPost';
+
+// Helper component to scroll to top on route change
+const ScrollToTop = () => {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    const mainContent = document.getElementById('main-content');
+    if (!mainContent) return;
+
+    if (hash) {
+      // Small timeout to ensure the page has rendered before scrolling
+      setTimeout(() => {
+        const element = document.getElementById(hash.substring(1));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      mainContent.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
+
+  return null;
+};
 
 const App: React.FC = () => {
   return (
-    <div id="main-content" className="bg-brand-bg h-screen overflow-y-auto scroll-smooth scroll-pt-20">
-      <Header />
-      <main>
-        <Hero />
-        <About />
-        <Services />
-        <CTA variant="mini" />
-        <Industries />
-        <Impact />
-        {/* <SuccessStories /> */}
-        <ClientLogos />
-        <FAQ />
-        {/* <Testimonials /> */}
-        <CTA />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <div id="main-content" className="bg-brand-bg h-screen overflow-y-auto scroll-smooth scroll-pt-20">
+        <ScrollToTop />
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/blog" element={<BlogList />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+        </Routes>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 };
 

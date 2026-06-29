@@ -34,12 +34,13 @@ const Header: React.FC = () => {
   const whatsappUrl = "https://wa.me/916207793914?text=I'd%20like%20to%20get%20a%20proposal.";
 
   const navLinks = [
-    { href: '#about', label: 'About Us' },
-    { href: '#services', label: 'Services' },
-    { href: '#industries', label: 'Industries' },
-    { href: '#ClientLogos', label: 'Work' },
-    { href: '#faq', label: 'FAQ' },
-    { href: '#contact', label: 'Contact' },
+    { href: '/#about', label: 'About Us' },
+    { href: '/#services', label: 'Services' },
+    { href: '/#industries', label: 'Industries' },
+    { href: '/#ClientLogos', label: 'Work' },
+    { href: '/#faq', label: 'FAQ' },
+    { href: '/#contact', label: 'Contact' },
+    { href: '/blog', label: 'Blog' },
   ];
   
   // Effect for scroll-based styling
@@ -58,7 +59,10 @@ const Header: React.FC = () => {
 
   // Effect for active section highlighting
   useEffect(() => {
-    const sections = navLinks.map(link => document.getElementById(link.href.substring(1))).filter(Boolean);
+    const sections = navLinks.map(link => {
+      const id = link.href.split('#')[1];
+      return id ? document.getElementById(id) : null;
+    }).filter(Boolean);
     const mainContentEl = document.getElementById('main-content');
     if (!mainContentEl) return;
     
@@ -120,7 +124,7 @@ const Header: React.FC = () => {
               <NavLink 
                 key={link.href} 
                 href={link.href}
-                isActive={activeSection === link.href.substring(1)}
+                isActive={activeSection !== '' && link.href.includes('#') && activeSection === link.href.split('#')[1]}
               >
                 {link.label}
               </NavLink>
@@ -164,7 +168,7 @@ const Header: React.FC = () => {
               key={link.href} 
               href={link.href} 
               onClick={handleMobileLinkClick}
-              isActive={activeSection === link.href.substring(1)}
+              isActive={activeSection !== '' && link.href.includes('#') && activeSection === link.href.split('#')[1]}
               isMobile={true}
               style={{
                 animation: isMenuOpen ? `fade-in-up 0.5s ease-out ${150 + index * 100}ms forwards` : 'none',
